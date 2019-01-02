@@ -1,0 +1,71 @@
+{
+    "java_home":"/usr/java/jdk1.7.0_80",
+    "jmx_invocationtimeoutsec":"30",
+    "console_enabled":"true",
+    "users":
+    [
+        {
+            "user_name":"wlsview",
+            "user_password":"welcome1",
+            "user_group":"Monitors"
+        }
+    ],
+    "server":
+    {
+        "server_name":"AdminServer",
+        "listen_address":"",
+        "admin_username":"weblogic",
+        "admin_password":"Welcome1",
+        "accept_backlog":"500",
+        "gracefulshutdown_timeout":"10",
+        "log_config":
+        {
+            "serverlog":
+            {
+                "file_count":"10",
+                "file_size":"10000"
+            },
+            "accesslog":
+            {
+                "enabled":"false"
+            }
+        },
+        "log_path":"${DOMAIN_HOME}/logs",
+        "dump_path":"${LOG_PATH}/dumps",
+        "mem_args":"-Xms5120m -Xmx5120m -Xmn1024m -XX:PermSize=1024m -XX:MaxPermSize=1024m",
+        "jmx_args":"-Dcom.sun.management.jmxremote.port=7441 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false",
+        "gc_args":"-XX:+ExplicitGCInvokesConcurrent -XX:+UseConcMarkSweepGC -XX:CMSInitiatingOccupancyFraction=60 -XX:+UseParNewGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSCompactAtFullCollection -XX:CMSFullGCsBeforeCompaction=0 -XX:+CMSClassUnloadingEnabled -XX:MaxTenuringThreshold=18  -XX:SurvivorRatio=8 -XX:ParallelGCThreads=16 -XX:+HeapDumpOnOutOfMemoryError",
+        "log_args":"-Xloggc:${LOG_PATH}/gc.${SERVER_NAME}.$$.log -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:HeapDumpPath=${DUMP_PATH}/heapdump.${SERVER_NAME}.$$.hprof -XX:ErrorFile=${LOG_PATH}/hs_err_${SERVER_NAME}.$$.log",
+        "app_args":"-Duser.timezone=GMT+08 -Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true -Djava.util.logging.config.file=${DOMAIN_HOME}/lib/logging.properties",
+        "other_args":"-Dweblogic.threadpool.MinPoolSize=100 -Dweblogic.threadpool.MaxPoolSize=1000 -Djavax.management.builder.initial=weblogic.management.jmx.mbeanserver.WLSMBeanServerBuilder -Dweblogic.data.canTransferAnyFile=true -Djava.net.preferIPv4Stack=true -Dweblogic.wsee.wstx.wsat.deployed=false -Dinstid=${DOMAIN_HOME}_${SERVER_NAME}"
+    },
+    "jdbcs":
+    [
+        {
+            "jdbc_name":"test-oracle-docker",
+            "jdbc_driver":"oracle.jdbc.OracleDriver",
+            "jdbc_url":"jdbc:oracle:thin:@localhost:1521:orcl",
+            "jdbc_user":"system",
+            "jdbc_password":"user@1234",
+            "jdbc_jndi":"test-oracle",
+            "jdbc_testsql":"SQL SELECT 1 FROM DUAL",
+            "jdbc_initcapacity":"10",
+            "jdbc_mincapacity":"10",
+            "jdbc_maxcapacity":"100",
+            "jdbc_testconnonreserve":"true",
+            "jdbc_inactivetimeoutsec":"60",
+            "jdbc_statementcachesize":"30"
+        }
+    ],
+    "applications":
+    [
+        {
+            "app_name":"SessionTest",
+            "app_path":"/weblogic/apps/SessionTest.war"
+        },
+        {
+            "app_name":"test",
+            "app_path":"/weblogic/apps/test.war"
+        }
+    ]
+}
